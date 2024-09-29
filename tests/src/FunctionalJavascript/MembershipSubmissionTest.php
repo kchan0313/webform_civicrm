@@ -231,6 +231,9 @@ final class MembershipSubmissionTest extends WebformCivicrmTestBase {
 
     $this->getSession()->getPage()->pressButton('Save');
     $this->createScreenshot($this->htmlOutputDirectory . '/debug06.png');
+    
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    $this->getSession()->getPage()->pressButton('Save elements');
 
     $this->drupalLogout();
     $this->drupalGet($this->webform->toUrl('canonical', ['query' => ['membership' => 2]]));
