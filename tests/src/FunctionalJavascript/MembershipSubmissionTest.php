@@ -210,27 +210,21 @@ final class MembershipSubmissionTest extends WebformCivicrmTestBase {
     // Add the Default -> [current-page:query:membership]
     $membershipElementEdit = $this->assertSession()->elementExists('css', '[data-drupal-selector="edit-webform-ui-elements-civicrm-1-membership-1-membership-membership-type-id-operations"] a.webform-ajax-link');
     $membershipElementEdit->click();
-    $this->createScreenshot($this->htmlOutputDirectory . '/debug01.png');
     $this->assertSession()->assertWaitOnAjaxRequest();
-    $this->createScreenshot($this->htmlOutputDirectory . '/debug02.png');
     $this->getSession()->getPage()->checkField('properties[extra][aslist]');
     $this->assertSession()->checkboxChecked('properties[extra][aslist]');
-    $this->createScreenshot($this->htmlOutputDirectory . '/debug03.png');
 
     $this->htmlOutput();
 
     $this->getSession()->getPage()->clickLink('Advanced');
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->htmlOutput();
-    $this->createScreenshot($this->htmlOutputDirectory . '/debug04.png');
 
     $fieldset = $this->assertSession()->elementExists('css', '[data-drupal-selector="edit-default"]');
     $fieldset->click();
     $this->getSession()->getPage()->fillField('Default value', '[current-page:query:membership]');
-    $this->createScreenshot($this->htmlOutputDirectory . '/debug05.png');
 
     $this->getSession()->getPage()->pressButton('Save');
-    $this->createScreenshot($this->htmlOutputDirectory . '/debug06.png');
     
     $this->assertSession()->assertWaitOnAjaxRequest();
     $this->getSession()->getPage()->pressButton('Save elements');
@@ -240,24 +234,16 @@ final class MembershipSubmissionTest extends WebformCivicrmTestBase {
     $this->htmlOutput();
     // ToDo ->
     $this->assertPageNoErrorMessages();
-    $this->createScreenshot($this->htmlOutputDirectory . '/debug07.png');
 
     $this->assertSession()->waitForField('First Name');
     $this->getSession()->getPage()->fillField('First Name', 'Frederick');
     $this->getSession()->getPage()->fillField('Last Name', 'Pabst');
     $this->assertSession()->pageTextContains('Basic Plus');
-    \CRM_Core_Error::debug_log_message('here 1');
     $this->getSession()->getPage()->pressButton('Submit');
-    \CRM_Core_Error::debug_log_message('here 2');
     $this->htmlOutput();
-    // ToDo ->
-    \CRM_Core_Error::debug_log_message('here 3');
     $this->assertPageNoErrorMessages();
-    \CRM_Core_Error::debug_log_message('here 4');
-    $this->createScreenshot($this->htmlOutputDirectory . '/debug08.png');
 
     $this->assertSession()->pageTextContains('New submission added to CiviCRM Webform Test.');
-    \CRM_Core_Error::debug_log_message('here 5');
     
     $api_result = $this->utils->wf_civicrm_api('membership', 'get', [
       'sequential' => 1,
